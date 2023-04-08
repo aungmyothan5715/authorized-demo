@@ -60,12 +60,12 @@ public class SecurityConfig {
         var uds = new InMemoryUserDetailsManager();
         var user1 = User.withUsername("john")
                 .password(passwordEncoder().encode("12345"))
-                .authorities("read", "admin").build();
+                .authorities("ROLE_USER", "ROLE_ADMIN").build();
         // .authorities() method can access more parameter eg -> ("read", "admin")
         //because of .authorities() is as varargs.
         var user2 = User.withUsername("mary")
                 .password(passwordEncoder().encode("12345"))
-                .authorities("write", "delete").build();
+                .authorities("ROLE_USER").build();
         //you can define user role .authorities("ROLE_USER") or ("ROLE_USER", "ROLE_ADMIN")
         //if you can use c.anyRequest().hasRole("USER")
         //if you don't want to use hasRole("ROLE_USER", "ROLE_ADMIN") method, you can use -> User.withUsername().password().roles("USER", "ADMIN").build(); lo use pay.
