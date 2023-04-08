@@ -27,9 +27,11 @@ public class SecurityConfig {
         //UI nae ma use lo httpBasic() method ko use tr
         http.httpBasic()
                 .and()
-                .authorizeHttpRequests(c -> c.anyRequest().access(
-                        new WebExpressionAuthorizationManager("hasAuthority('write')")
-                ));
+                .authorizeHttpRequests()
+                .requestMatchers("/hello").hasRole("USER")
+                .requestMatchers("/greeting").hasRole("ADMIN")
+                .anyRequest().authenticated();
+        return http.build();
         //1
         // c.anyRequest().authenticated() ka .authenticated() hmar .hasAuthority() shi tal
         //.hasAuthority() method has two parts,there are  .hasAnyAuthority(), hasAuthority(), hasRole and so on...
@@ -43,7 +45,7 @@ public class SecurityConfig {
         //You can also use access() method instead of hasAuthority().
         //Example -> .access(new WebExpressionAuthorizationManager("hasAuthority('write')")
 
-        return http.build();
+
 
 
     }
